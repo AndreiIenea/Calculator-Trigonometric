@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator Trigonometric</title>
+<style>
+    /* Stiluri CSS pentru aspect */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #14213D;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #14213D;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4AB0D9;
+    }
+    .input-group {
+        margin-bottom: 15px;
+    }
+    .input-group label {
+        font-weight: bold;
+    }
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid ##7aff00;
+        border-radius: 4px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #E00A24;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #7aff00;
+    }
+    #results {
+        margin-top: 20px;
+    }
+    .results {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .results th, .results td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ff152a;
+    }
+    .results th {
+        background-color: #ffffff;
+        color: #14213D;
+    }
+    .results tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Calculator Trigonometric</h1>
+    <div class="input-group">
+        <label for="degrees">Grade:</label>
+        <input type="number" id="degrees" min="0" max="360" step="any">
+    </div>
+    <div class="input-group">
+        <label for="angleType">Tip unghi:</label>
+        <select id="angleType">
+            <option value="degrees">Grade</option>
+            <option value="radians">Radiani</option>
+        </select>
+    </div>
+    <div>
+        <button onclick="calculate()">Calculează</button>
+    </div>
+    <div id="results">
+        <!-- Aici vor fi afișate rezultatele -->
+    </div>
+</div>
+<script>
+function calculate() {
+    var degrees = parseFloat(document.getElementById('degrees').value);
+    var angleType = document.getElementById('angleType').value;
+
+    var radians;
+    if (angleType === 'degrees') {
+        radians = degrees * Math.PI / 180;
+    } else {
+        radians = degrees;
+    }
+
+    var sin = Math.sin(radians).toFixed(4);
+    var cos = Math.cos(radians).toFixed(4);
+    var tan = Math.tan(radians).toFixed(4);
+    var cot = (1 / Math.tan(radians)).toFixed(4);
+
+    document.getElementById('results').innerHTML = `<table class="results">
+                                                        <tr>
+                                                            <th>Operație</th>
+                                                            <th>Rezultat</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sinus</td>
+                                                            <td>${sin}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cosinus</td>
+                                                            <td>${cos}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tangenta</td>
+                                                            <td>${tan}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cotangenta</td>
+                                                            <td>${cot}</td>
+                                                        </tr>
+                                                    </table>`;
+}
+</script>
+</body>
+</html>
