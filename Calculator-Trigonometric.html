@@ -39,13 +39,14 @@
     }
     button {
         width: 100%;
-        padding: 10px;
+        padding: 15px;
         background-color: #E00A24;
         color: #ffffff;
         border: none;
-        border-radius: 4px;
+        border-radius: 100px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.9s ease;
+        margin-bottom: 15px; /* Adăugăm o margine între butoane */
     }
     button:hover {
         background-color: #7aff00;
@@ -79,12 +80,23 @@
         <label for="degrees">Grade:</label>
         <input type="number" id="degrees" min="0" max="360" step="any">
     </div>
+    <div class="input-group" id="minutesGroup" style="display: none;">
+        <label for="minutes">Minute:</label>
+        <input type="number" id="minutes" min="0" max="59">
+    </div>
+    <div class="input-group" id="secondsGroup" style="display: none;">
+        <label for="seconds">Secunde:</label>
+        <input type="number" id="seconds" min="0" max="59">
+    </div>
     <div class="input-group">
         <label for="angleType">Tip unghi:</label>
         <select id="angleType">
             <option value="degrees">Grade</option>
             <option value="radians">Radiani</option>
         </select>
+    </div>
+    <div>
+        <button onclick="toggleTimeInputs()">Adaugă/Elimina Min. și Sec.🔞</button>
     </div>
     <div>
         <button onclick="calculate()">Calculează</button>
@@ -94,9 +106,36 @@
     </div>
 </div>
 <script>
+function toggleTimeInputs() {
+    var minutesGroup = document.getElementById('minutesGroup');
+    var secondsGroup = document.getElementById('secondsGroup');
+
+    if (minutesGroup.style.display === 'none') {
+        minutesGroup.style.display = 'block';
+        secondsGroup.style.display = 'block';
+    } else {
+        minutesGroup.style.display = 'none';
+        secondsGroup.style.display = 'none';
+    }
+}
+
 function calculate() {
     var degrees = parseFloat(document.getElementById('degrees').value);
     var angleType = document.getElementById('angleType').value;
+
+    var minutesInput = document.getElementById('minutes');
+    var secondsInput = document.getElementById('seconds');
+
+    var minutes = 0;
+    var seconds = 0;
+
+    if (minutesInput && secondsInput) {
+        minutes = parseFloat(minutesInput.value) || 0;
+        seconds = parseFloat(secondsInput.value) || 0;
+    }
+
+    // Convert degrees, minutes, and seconds to decimal degrees
+    degrees += minutes / 60 + seconds / 3600;
 
     var radians;
     if (angleType === 'degrees') {
@@ -104,7 +143,6 @@ function calculate() {
     } else {
         radians = degrees;
     }
-
     var sin = Math.sin(radians).toFixed(4);
     var cos = Math.cos(radians).toFixed(4);
     var tan = Math.tan(radians).toFixed(4);
